@@ -168,7 +168,7 @@ helm version
 
 ### 3.1. Criar o Cluster
 ```bash
-kind create cluster --name aulaone
+kind create cluster --config kind-config.yaml
 ```
 
 ### 3.2. Verificar o Cluster
@@ -217,13 +217,13 @@ metadata:
   name: nginx-service
   namespace: aula1
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: nginx
   ports:
-  - protocol: TCP
-    port: 80
+  - port: 80
     targetPort: 80
+    nodePort: 30080
 ```
 
 ### 4.2. Aplicar o Manifesto
@@ -239,11 +239,8 @@ kubectl get service -n aula1
 ```
 
 ### 4.4. Acessar o Nginx via Port Forward
-```bash
-kubectl port-forward service/nginx-service 8080:80 -n aula1
-```
 
-Abra o navegador em: http://localhost:8080  
+Abra o navegador em: http://<IP_PUBLICO_DA_EC2>:30080  
 Para encerrar: `Ctrl + C`
 
 ---
